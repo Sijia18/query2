@@ -27,13 +27,14 @@ public class FlightService {
                 .collect(Collectors.joining());
     }
 
-    public List<Flight> addFlight(int n) {
+    public List<Flight> addFlights(int n) {
         Random random = new Random();
         List<Flight> flights = IntStream.range(0, n).mapToObj(i -> {
             Flight flight = new Flight();
             flight.setDescription("Flight " + (i + 1));
             flight.setFromAirport(generateRandomString(random));
             flight.setToAirport(generateRandomString(random));
+            flight.setStatus(Status.valueOf(Status.values()[random.nextInt(Status.values().length)].toString()));
             return flight;
         }).collect(Collectors.toList());
         return flightRepository.saveAll(flights);
@@ -46,7 +47,7 @@ public class FlightService {
     }
 
     public List<Flight> readOnTimeFlights() {
-        return flightRepository.findByStatus(Status.ONTIME);
+        return flightRepository.findByStatus(Status.valueOf(Status.ONTIME.toString()));
     }
 
     public List<Flight> readFlightsByStatuses(String p1, String p2) {

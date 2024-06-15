@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class FlightController {
 
     @PostMapping
     public List<Flight> createFlights(@RequestParam(required = false, defaultValue = "100") int n) {
-        return flightService.addFlight(n);
+        return flightService.addFlights(n);
     }
 
     @GetMapping
@@ -27,16 +28,13 @@ public class FlightController {
         return flightService.readAllFlightsPaged(page, size);
     }
 
-    @GetMapping("/onTime")
+    @GetMapping("/ontime")
     public List<Flight> readOnTimeFlights() {
         return flightService.readOnTimeFlights();
     }
 
     @GetMapping("/statuses")
-    public List<Flight> readFlightsByStatuses(@RequestParam("status1") Status status1, @RequestParam("status2") List<Status> status2) {
-        List<Status> statusList = new ArrayList<>();
-        statusList.add(status1);
-        statusList.addAll(status2);
-        return flightService.readFlightBy(statusList);
+    public List<Flight> readFlightsByStatuses(@RequestParam("status1") String status1, @RequestParam("status2") String status2) {
+        return flightService.readFlightsByStatuses(status1, status2);
     }
 }
