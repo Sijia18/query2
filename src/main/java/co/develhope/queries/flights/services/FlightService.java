@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class FlightService {
         return flightRepository.findByStatus(Status.ONTIME);
     }
 
-    public List<Flight> readFlightBy(List<Status> statusList) {
-        return flightRepository.findByStatusIn(statusList);
+    public List<Flight> readFlightsByStatuses(String p1, String p2) {
+        return flightRepository.findByStatusIn(p1, p2);
     }
 }
